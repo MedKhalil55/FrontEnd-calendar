@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
-import { CalendarDateFormatter, CalendarModule, CalendarNativeDateFormatter, DateAdapter, DateFormatterParams } from 'angular-calendar';
+import { CalendarDateFormatter, CalendarEventTitleFormatter, CalendarModule, CalendarNativeDateFormatter, DateAdapter, DateFormatterParams } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import localeFr from '@angular/common/locales/fr';
 import { registerLocaleData } from '@angular/common';
@@ -21,6 +21,16 @@ import { CalendarComponent } from './calendar/calendar.component';
 import { ColorLegendComponent } from './color-legend/color-legend.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { DatePipe } from '@angular/common';
+import { UsercalendarComponent } from './usercalendar/usercalendar.component';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
+import { CommonModule } from '@angular/common';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import {MatRadioModule} from '@angular/material/radio';
+
+
 
 
 
@@ -43,7 +53,10 @@ class CustomDateFormatter extends CalendarNativeDateFormatter {
     AppComponent,
     AddEventModalComponent,
     CalendarComponent,
-    ColorLegendComponent
+    ColorLegendComponent,
+    UsercalendarComponent,
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
@@ -59,7 +72,14 @@ class CustomDateFormatter extends CalendarNativeDateFormatter {
     NgxMatTimepickerModule,
     NgxMatNativeDateModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    DatePipe,
+    CommonModule,
+    NgMultiSelectDropDownModule.forRoot(),
+    MatSlideToggleModule,
+    MatRadioModule
+
+    
  
     
     
@@ -67,7 +87,9 @@ class CustomDateFormatter extends CalendarNativeDateFormatter {
 
   ],
   providers: [
-    {provide: CalendarDateFormatter,useClass: CustomDateFormatter}
+    DatePipe,
+    { provide: CalendarDateFormatter , useClass: CustomDateFormatter },
+
   ],
   bootstrap: [AppComponent]
 })

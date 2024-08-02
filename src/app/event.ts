@@ -1,25 +1,28 @@
-// event.ts
-export class Event {
-    id: number | null;
-    title: string;
-    description: string;
-    startDateTime: string;
-    endDateTime: string;
-    category: string;
+import { DatePipe } from "@angular/common";
+import { CalendarEvent } from "angular-calendar";
 
-    constructor(
-        id: number | null = null,
-        title: string = '',
-        description: string = '',
-        startDateTime: string = new Date().toISOString().substring(0, 16),
-        endDateTime: string = new Date().toISOString().substring(0, 16),
-        category: string = ''
-    ) {
-        this.id = id;
-        this.title = title;
-        this.description = description;
-        this.startDateTime = startDateTime;
-        this.endDateTime = endDateTime;
-        this.category = category;
-    }
+
+const datePipe = new DatePipe('en-US');
+
+
+export function customToSpe(CustomCalendarEvent: any): CalendarEvent {
+    console.log('CustomCalendarEvent:', CustomCalendarEvent);
+    return {
+        id: CustomCalendarEvent.id,
+        title: CustomCalendarEvent.title,
+        color: CustomCalendarEvent.color,
+        description: CustomCalendarEvent.description,
+        category: CustomCalendarEvent.category,
+        isCompleted : CustomCalendarEvent.isCompleted,
+        userIds : CustomCalendarEvent.userIds,
+        responsibleUserId : CustomCalendarEvent.responsibleUserId,
+        start: datePipe.transform(CustomCalendarEvent.start, 'yyyy-MM-ddTHH:mm:ss') ?? CustomCalendarEvent.start.toISOString().substring(0, 19),
+        end: datePipe.transform(CustomCalendarEvent.end, 'yyyy-MM-ddTHH:mm:ss') ?? CustomCalendarEvent.end.toISOString().substring(0, 19),
+        
+
+    };
 }
+
+
+
+

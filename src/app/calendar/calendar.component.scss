@@ -76,4 +76,48 @@ body {
   }
 }
 
+.logout-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: #dc3545; /* Red */
+  color: white;
+  border: none;
+}
+.event-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.event-color {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 5px;
+  margin-left: 5px;
+}
+.event-title:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+.cal-event {
+  display: flex;
+  align-items: center;
+}
+
+.completed-event {
+  ::after {
+    content: "✓"; /* Unicode character for checkmark */
+    color: green;
+  }
+}
+.mat-mdc-radio-button ~ .mat-mdc-radio-button {
+  margin-left: 16px;
+}
+
+
+
+
 

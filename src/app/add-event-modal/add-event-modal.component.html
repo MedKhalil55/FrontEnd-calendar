@@ -2,12 +2,22 @@
   <h2 class="modal-title">{{ isEditMode ? 'Edit Event' : 'Add Event' }}</h2>
   <button type="button" class="btn-close" aria-label="Close" (click)="onCancelClick()"></button>
 </div>
+
 <div class="modal-body">
   <form [formGroup]="form" (ngSubmit)="onSaveClick()">
+    <div class="mb-3" *ngIf="isUser && isEditMode && isResponsible">
+      <p>
+        <mat-slide-toggle [checked]="form.value.isCompleted" (change)="onToggleChange($event.checked)">
+          Completed
+        </mat-slide-toggle>
+
+      </p>
+    </div>
     <div class="mb-3">
       <label for="title" class="form-label">Title</label>
       <input type="text" class="form-control" id="title" formControlName="title">
-      <div *ngIf="form.controls['title'].invalid && (form.controls['title'].dirty || form.controls['title'].touched)" class="text-danger">
+      <div *ngIf="form.controls['title'].invalid && (form.controls['title'].dirty || form.controls['title'].touched)"
+        class="text-danger">
         Title is required.
       </div>
     </div>
@@ -18,17 +28,42 @@
     <div class="mb-3">
       <label for="startDateTime" class="form-label">Start Date & Time</label>
       <input type="datetime-local" class="form-control" id="startDateTime" formControlName="startDateTime">
-      <div *ngIf="form.controls['startDateTime'].invalid && (form.controls['startDateTime'].dirty || form.controls['startDateTime'].touched)" class="text-danger">
+      <div
+        *ngIf="form.controls['startDateTime'].invalid && (form.controls['startDateTime'].dirty || form.controls['startDateTime'].touched)"
+        class="text-danger">
         Start Date & Time is required.
       </div>
     </div>
     <div class="mb-3">
       <label for="endDateTime" class="form-label">End Date & Time</label>
       <input type="datetime-local" class="form-control" id="endDateTime" formControlName="endDateTime">
-      <div *ngIf="form.controls['endDateTime'].invalid && (form.controls['endDateTime'].dirty || form.controls['endDateTime'].touched)" class="text-danger">
+      <div
+        *ngIf="form.controls['endDateTime'].invalid && (form.controls['endDateTime'].dirty || form.controls['endDateTime'].touched)"
+        class="text-danger">
         End Date & Time is required.
       </div>
     </div>
+
+    <div class="mb-3" *ngIf="isAdmin">
+      <label for="users" class="form-label">Assign Users</label>
+      <select class="form-control" id="userIds" formControlName="userIds" multiple>
+        <option *ngFor="let user of users" [value]="user.id">{{ user.firstname }}</option>
+      </select>
+    </div>
+
+    <div class="mb-3" *ngIf="isAdmin">
+      <label for="responsibleUserId" class="form-label">Responsible User</label>
+      <select class="form-control" id="responsibleUserId" formControlName="responsibleUserId">
+        <option *ngFor="let user of users" [value]="user.id">{{ user.firstname }}</option>
+      </select>
+    </div>
+
+    <div
+      *ngIf="form.controls['responsibleUserId'].invalid && (form.controls['responsibleUserId'].dirty || form.controls['responsibleUserId'].touched)"
+      class="text-danger">
+      Responsible is required.
+    </div>
+
     <div class="mb-3">
       <label for="category" class="form-label">Category</label>
       <select class="form-control" id="category" formControlName="category">
@@ -36,19 +71,22 @@
         <option value="category2">Category 2</option>
         <option value="category3">Category 3</option>
       </select>
-      <div *ngIf="form.controls['category'].invalid && (form.controls['category'].dirty || form.controls['category'].touched)" class="text-danger">
+      <div
+        *ngIf="form.controls['category'].invalid && (form.controls['category'].dirty || form.controls['category'].touched)"
+        class="text-danger">
         Category is required.
       </div>
     </div>
     <div *ngIf="isInvalidDateOrder()" class="alert alert-danger" role="alert">
       Start date must be before end date.
-    </div>   
+    </div>
     <div class="d-flex justify-content-end">
       <button type="button" *ngIf="isEditMode" (click)="onDeleteClick()" class="btn btn-danger me-2 deleteb">
         <i class="fas fa-trash"></i>
       </button>
       <button type="button" class="btn btn-secondary me-2" (click)="onCancelClick()">Cancel</button>
-      <button type="submit" class="btn btn-primary" [disabled]="form.invalid">{{ isEditMode ? 'Update' : 'Save' }}</button>
+      <button type="submit" class="btn btn-primary" [disabled]="form.invalid">{{ isEditMode ? 'Update' : 'Save'
+        }}</button>
     </div>
   </form>
 </div>
