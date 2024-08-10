@@ -254,15 +254,15 @@ onFilterChange() {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         if (result.delete) {
-          const token = localStorage.getItem('token')
-          if(!token){
-            throw new Error("No Token Found")
+          const token = localStorage.getItem('token');
+          if (!token) {
+            throw new Error("No Token Found");
           }
-              this.eventService.deleteEvent(event.id as number , token).subscribe(() => {
-            this.events = this.events.filter(e => e !== event);
+          this.eventService.deleteEvent(event.id as number, token).subscribe(() => {
+            this.events = this.events.filter(e => e.id !== event.id);
             this.refresh.next();
           });
-        } else if (result.event) {
+        }  else if (result.event) {
           if (result.isEditMode) {
             this.eventService.updateEvent(event.id as number, result.event).subscribe(updatedEvent => {
               const index = this.events.findIndex(e => e === event);
